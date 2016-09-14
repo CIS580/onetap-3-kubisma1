@@ -13,9 +13,10 @@ var snakes = [];
 for(var i=0; i < 20; i++) {
   snakes.push(new Snake({
     x: Math.random() * 760,
-    y: Math.random() * 20 + 100
+    y: Math.random() * 20 + 100 // push them 100 px from top
   }));
 }
+snakes.sort(function(s1, s2) {return s1.y - s2.y;})
 
 /**
  * @function masterLoop
@@ -53,6 +54,9 @@ function update(elapsedTime) {
 function render(elapsedTime, ctx) {
   ctx.fillStyle = "lightblue";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  player.render(elapsedTime, ctx);
+  // Iterates over all snakes, snake is any single element, can be extended by an index
   snakes.forEach(function(snake){snake.render(elapsedTime, ctx);});
+  // Rendering player after a snake should put player over the snake
+  player.render(elapsedTime, ctx);
+
 }
